@@ -24,10 +24,10 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
 
             $_SESSION["user_id"]=$user["id"];
             if($user["user_type"]=="user"){
-                header("Location: index_user.php");
+                header("Location: User_Skill_Post/index_user.php");
                 exit;
             }else{
-                header("Location: index_comp.php");
+                header("Location: Comp_info/index_comp.php");
                 exit;
             }
 

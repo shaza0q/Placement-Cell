@@ -13,6 +13,17 @@ if(isset($_SESSION["user_id"])){
     $user=$result->fetch_assoc();
 }
 
+if (isset($_POST['comp-form-submit'])){
+    $img_name=$_FILES['comp_logo']['name'];
+    $tmp_img_name=$_FILES['comp_logo']['tmp_name'];
+    $folder='Comp_Logo_Uploads/';
+    move_uploaded_file($tmp_img_name,$folder.$img_name);
+    
+    header("Location: index_jpost.php");
+
+}else{
+    echo("Not Uploaded");
+}
 
 ?>
 
@@ -30,7 +41,7 @@ if(isset($_SESSION["user_id"])){
 </head>
 <body>
 
-    <h1> Post which Job you want to give</h1>
+    <h1> Tell us about yourself..</h1>
     
     <?php if(isset($user)): ?>
         <p> Hello <?= htmlspecialchars($user['uname'])?></p> 
@@ -44,14 +55,10 @@ if(isset($_SESSION["user_id"])){
         <label>Logo</label>
         <input type="file" name="comp_logo">
 
-        <label>Company Name:</label>
-        <input type="text" name="comp_name">
-
         <label>Post required:</label>
         <input type="text" name="comp_post">
 
-        <label>Job description:</label>
-
+        <label>Description about your Company:</label>
         <textarea rows="3" 
         cols="50" name="comp_desc" 
         onclick="if(this.value=='Enter description here...') this.value='';">Enter description here...</textarea>
