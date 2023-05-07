@@ -1,0 +1,30 @@
+.comp_des{
+    display: flex;
+    width:50%;
+    margin: auto;
+    background-color: rgb(53, 247, 53);
+    padding: 1em;
+    flex-direction: column;
+
+}
+
+
+#comp_des_upper{
+    display: flex;
+
+}
+
+
+#comp_but{
+    border:1px solid black;
+}
+
+#comp_logo{
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    margin: 1em;
+    border: 1.5px solid black;
+    
+}
+

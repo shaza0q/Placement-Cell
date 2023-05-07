@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp PLacement</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+
+    <h1>Sign Up</h1>
+    <form action="process_Signup.php" method="POST">
+        <div>
+            <label>Username: </label>
+            <input type="text" name="uname" required>
+        </div>
+        <div>
+            <label>PAssword: </label>
+            <input type="password" name="password" required>
+        </div>
+        <div>
+            <label>Confirm PAssword: </label>
+            <input type="password" name="con_pass" required>
+        </div>
+        <div>
+            <label>Email: </label>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <label>User type: </label>
+            <select name="utype">
+                <option value="">--Select an option--</option>
+                <option value="user">User</option>
+                <option value="comp">Company</option>
+            </select>
+        </div>
+        <button>Sign Up</button>
+    </form>
+
+
+</body>
+</html>
