@@ -13,13 +13,38 @@ if(isset($_SESSION["user_id"])){
     $user=$result->fetch_assoc();
 }
 
-if (isset($_POST['comp-form-submit'])){
+
+
+if ($_SERVER["REQUEST_METHOD"]==="POST"){
+
     $img_name=$_FILES['comp_logo']['name'];
     $tmp_img_name=$_FILES['comp_logo']['tmp_name'];
-    $folder='Comp_Logo_Uploads/';
+    $folder='../Comp_Logo_Uploads/';
     move_uploaded_file($tmp_img_name,$folder.$img_name);
     
-    header("Location: index_jpost.php");
+    // header("Location: ../Company_Job_Post/index_jpost.php");
+
+    $mysqli = require __DIR__ . "../database.php";
+
+    $sql = "INSERT INTO comp_data (id, cname, cwork, cdesc) VALUES (?,?,?,?)";
+
+    $stmt=$mysqli->stmt_init();
+
+    if(! $stmt->prepare($sql)){
+        echo("SQL error: " . $mysqli->error);
+    }
+
+    $stmt->bind_param("isss",
+    $user["id"],
+    $user["uname"],
+    $_POST["comp_work"],
+    $_POST["comp_desc"]);
+
+    if($stmt->execute()){
+        echo ("BANZAI!!");
+    }else{
+        die($mysqli->error." ". $mysqli->errno);
+    }
 
 }else{
     echo("Not Uploaded");
@@ -50,13 +75,13 @@ if (isset($_POST['comp-form-submit'])){
         <p>You can <a href="login.php"> log in</a> or <a href="signup.htm"> Sign Up</a></p> 
     <?php endif; ?>
 
-    <form action="upload.php" method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
 
         <label>Logo</label>
         <input type="file" name="comp_logo">
 
-        <label>Post required:</label>
-        <input type="text" name="comp_post">
+        <label>Main field of work:</label>
+        <input type="text" name="comp_work">
 
         <label>Description about your Company:</label>
         <textarea rows="3" 

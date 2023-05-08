@@ -2,7 +2,7 @@
 
 
 if($_SERVER["REQUEST_METHOD"]=== "POST"){
-    $mysqli = require __DIR__ . "/database.php";
+    $mysqli = require __DIR__ . "database.php";
 
     $sql=sprintf("SELECT * FROM user_info
                 WHERE uname = '%s'",
@@ -24,10 +24,10 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
 
             $_SESSION["user_id"]=$user["id"];
             if($user["user_type"]=="user"){
-                header("Location: User_Skill_Post/index_user.php");
+                header("Location: ../User_Skill_Post/index_user.php");
                 exit;
             }else{
-                header("Location: Comp_info/index_comp.php");
+                header("Location: ../Comp_info/index_comp.php");
                 exit;
             }
 
@@ -41,6 +41,7 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
 }
 
 ?>
+
 
 
 <!DOCTYPE html>
