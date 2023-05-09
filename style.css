@@ -1,0 +1,36 @@
+body {
+  background-color: #80AAFF;
+}
+
+/* Style the header */
+header {
+  background-color: #80AAFF;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style the navigation links */
+nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #80AAFF;
+  color: #fff;
+  padding: 10px;
+}
+
+/* Style the main content area */
+main {
+  margin: 10px;
+  padding: 10px;
+  background-color: #80AAFF;
+  color: #333;
+}
+
+/* Style the footer */
+footer {
+  background-color: #80AAFF;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
