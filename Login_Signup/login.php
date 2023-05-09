@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Placement</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="https://github.com/shaza0q/Placement_Cell/blob/main/style.css">
 </head>
 <body>
     <h1>Login</h1>
