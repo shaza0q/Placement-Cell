@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
 
     $mysqli = require __DIR__ . "../database.php";
 
-    $sql = "INSERT INTO comp_data (id, cname, cwork, cdesc) VALUES (?,?,?,?)";
+    $sql = "INSERT INTO comp_data (id, cname, cwork, cdesc, comp_logo) VALUES (?,?,?,?,?)";
 
     $stmt=$mysqli->stmt_init();
 
@@ -34,14 +34,15 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
         echo("SQL error: " . $mysqli->error);
     }
 
-    $stmt->bind_param("isss",
+    $stmt->bind_param("issss",
     $user["id"],
     $user["uname"],
     $_POST["comp_work"],
-    $_POST["comp_desc"]);
+    $_POST["comp_desc"],
+    $img_name);
 
     if($stmt->execute()){
-        echo ("BANZAI!!");
+        header("Location: ../Company_Job_Post/index_jpost.php");
     }else{
         die($mysqli->error." ". $mysqli->errno);
     }
