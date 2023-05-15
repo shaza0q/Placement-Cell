@@ -11,9 +11,16 @@ if(isset($_SESSION["user_id"])){
 
     $result= $mysqli->query($sql);
     $user=$result->fetch_assoc();
+
+    // $sql1="SELECT * comp_data 
+    // WHERE id={$_SESSION["user_id"]}";
+
+    // $resut1= $mysqli->query($sql1);
+    // $comp_dt=$result1->fetch_assoc();
+
 }
 
-
+// echo $comp_dt["comp_logo"];
 
 if ($_SERVER["REQUEST_METHOD"]==="POST"){
 
@@ -23,8 +30,6 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
     move_uploaded_file($tmp_img_name,$folder.$img_name);
     
     // header("Location: ../Company_Job_Post/index_jpost.php");
-
-    $mysqli = require __DIR__ . "../database.php";
 
     $sql = "INSERT INTO comp_data (id, cname, cwork, cdesc, comp_logo) VALUES (?,?,?,?,?)";
 
@@ -79,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
     <form method="POST" enctype="multipart/form-data">
 
         <label>Logo</label>
+        
         <input type="file" name="comp_logo">
 
         <label>Main field of work:</label>

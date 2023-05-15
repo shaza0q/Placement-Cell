@@ -1,0 +1,123 @@
+:root {
+    font-size: 20px;
+    box-sizing: inherit;
+  }
+
+  body{
+    font-family: Helvetica;
+    background: url(../Website\ photos/pcell.jpg);
+    background-size: cover;
+    
+  }
+  
+  .container{
+    display:flex;
+    flex-direction: column;
+  }
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  
+  p {
+    margin: 0 0 0.4em 1em;
+  }
+  
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+
+  .card {
+    max-width: 300px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+      
+    max-width: 500px;
+    height: 250px;
+    
+    margin: 20px 5px;
+  
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.60);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+  
+    backdrop-filter: blur(5px);
+    
+    
+  }
+
+  #logo_card{
+    height: 40px;
+    width: auto;
+    border-radius: 48%;
+  }
+
+
+  #lola_align{
+    display:flex;
+    flex-direction: row;
+    background-color: #e96ca2;
+    padding:15px 0 15px 15px;
+    border-radius: 20px 20px 0 0px;
+    backdrop-filter: blur(15px);
+  }
+
+  .desc_job{
+    
+    display: flex;
+    flex-direction: column;
+    padding: 0.3em;
+    font-size: 20;
+    margin: 10px 0;
+    color:#4f0447;
+    overflow: auto;
+  }
+
+  .comp_name{
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .zoom {
+    padding: 0.3em;
+    color: #4f0447;
+    display: inline-block;
+    position: relative;
+    -webkit-animation-name: zoomInOut;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-name: zoomInOut;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@-webkit-keyframes zoomInOut {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.12);
+  }
+}
+
+@keyframes zoomInOut {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+}

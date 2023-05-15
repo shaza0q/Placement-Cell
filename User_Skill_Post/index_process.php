@@ -1,6 +1,6 @@
 <?php
 
-$mysqli=require __DIR__."..\database.php";
+$mysqli=require __DIR__."\..\database.php";
 
 session_start();
 
@@ -27,7 +27,7 @@ $stmt->bind_param("isss",
                 
 if(mysqli_stmt_execute($stmt)){
     echo("Updated Successfully");
-    header("Location: index.php");
+    header("Location: ../Main_Pages/user_index.php");
 }
 
 

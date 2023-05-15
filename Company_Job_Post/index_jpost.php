@@ -4,7 +4,7 @@ session_start();
 
 echo date("d/m/Y")."<br>";
 
-$mysqli=require __DIR__."/database.php";
+$mysqli=require __DIR__."\..\database.php";
 
 if(isset($_SESSION["user_id"])){
 
@@ -13,7 +13,37 @@ if(isset($_SESSION["user_id"])){
 
     $result= $mysqli->query($sql);
     $user=$result->fetch_assoc();
+
+    $sql1="SELECT * FROM job_post
+    WHERE id={$_SESSION["user_id"]}";
+
+    $result1= $mysqli->query($sql1);
+    $user1=$result1->fetch_assoc();
+
 }
+
+if($_SERVER["REQUEST_METHOD"]==="POST"){
+
+    $sql="INSERT INTO job_post (id, name, jpost, nvacan, jskills, jdesc, jtime) VALUES (?,?,?,?,?,?,?)";
+
+    $stmt=$mysqli->stmt_init();
+
+    if(! $stmt->prepare($sql)){
+        echo("SQL error: " . $mysqli->error);
+    }
+
+    $stmt->bind_param("ississi",
+    $user["id"], $user["cname"], $_POST["jpost"], $_POST["nvacan"], $_POST["jskills"], $_POST["jdesc"], $_POST["jtime"]);
+
+    if ($stmt->execute()) {
+        header("Location: ../Main_Pages/comp_index.php");
+
+    } else {
+        die($mysqli->error . " " . $mysqli->errno);
+    }
+
+}
+
 
 ?>
 
@@ -39,26 +69,37 @@ if(isset($_SESSION["user_id"])){
         
     </div>
 
-    <form method="POST">
-    <h1>Enter the job details</h1>
+    <?php if(htmlspecialchars($user1["name"])!=""): ?>
+        <p>You have already posted a job offer, wait for <?= htmlspecialchars(($user1["jtime"])) ?> days before posting new job...</p>
+        <p>Thank you for your patience</p>
 
-    <label>Enter job Post:</label>
-    <input type="text" name="jpost">
+    <?php else: ?>
 
-    <label>Enter vacancies</label>
-    <input type="number" name="nvacan">
+        <form method="POST">
+            <h1>Enter the job details</h1>
 
-    <label>Enter skills required:</label>
-    <input type="text" name="jskills">
+            <label>Enter job Post:</label>
+            <input type="text" name="jpost">
 
-    <label>Enter job description:</label>
-    <input type="text" name="jdesc">
+            <label>Enter vacancies</label>
+            <input type="number" name="nvacan">
 
-    <label>Enter time:</label>
-    <input type="number" name="jtime">
+            <label>Enter skills required:</label>
+            <input type="text" name="jskills">
 
-    <input type="submit" name="job-post-submit">
-    
+            <label>Enter job description:</label>
+            <input type="text" name="jdesc">
+
+            <label>Enter time:</label>
+            <input type="number" name="jtime">
+
+            <input type="submit" name="job-post-submit">
+        </form>
+
+    <?php endif; ?>
+
+    <p>You can return to the Home Page using this <a href="../Main_Pages/comp_index.php">link</a></p>
+        
 
 
 </body>

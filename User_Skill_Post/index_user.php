@@ -3,24 +3,58 @@
 session_start();
 // print_r($_SESSION);
 
-$mysqli = require __DIR__ . "/database.php";
+$mysqli = require __DIR__ . "\..\database.php";
 
-if(isset($_SESSION["user_id"])){
+if (isset($_SESSION["user_id"])) {
 
-    $sql="SELECT * FROM user_info
+    $sql = "SELECT * FROM user_info
         WHERE id= {$_SESSION["user_id"]}";
 
     $result = $mysqli->query($sql);
 
-    $user=$result->fetch_assoc();
+    $user = $result->fetch_assoc();
 }
 
-?>
+if (isset($_SESSION["user_id"])) {
+    $sql1 = "SELECT * FROM user_data
+    WHERE id={$_SESSION["user_id"]}";
 
+    $result1 = $mysqli->query($sql1);
+
+    $userin = $result1->fetch_assoc();
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $sql2 = "UPDATE user_data set skill1=?, skill2=?, skill3=? WHERE id={$_SESSION["user_id"]}";
+
+    $stmt = $mysqli->stmt_init();
+
+    if (!$stmt->prepare($sql2)) {
+        echo ("sql error: " . $mysqli->error);
+    }
+
+    $stmt->bind_param(
+        "sss",
+        $_POST["skill1"],
+        $_POST["skill2"],
+        $_POST["skill3"]
+    );
+
+    if ($stmt->execute()) {
+        header("Location: ../Main_Pages/user_index.php");
+
+    } else {
+        die($mysqli->error . " " . $mysqli->errno);
+    }
+
+}
+?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,66 +63,85 @@ if(isset($_SESSION["user_id"])){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <link rel="stylesheet" href="style_index.css">
 </head>
+
 <body>
-    
+
     <h1>Home</h1>
 
-    <?php if(isset($user)): ?>
+    <?php if (isset($user)): ?>
+
         <p> You are logged in </p>
-        <p> Hello <?= htmlspecialchars($user['uname'])?></p> 
-        <p><a href="logout.php">Log out</a></p>
+        <p> Hello
+            <?= htmlspecialchars($user['uname']) ?>
+        </p>
+
+        <div class="skill_update">
+            <?php if (isset($userin)): ?>
+
+                <p>Your skills are as follows <br>
+                    <?= htmlspecialchars($userin["skill1"]) ?>
+                    <br>
+                    <?= htmlspecialchars($userin["skill2"]) ?>
+                    <br>
+                    <?= htmlspecialchars($userin["skill3"]) ?>
+                </p>
+
+            <?php endif; ?>
+
+            <?php if(htmlspecialchars($userin["skill1"]) == ""): ?>
+                <h2>Enter You skills</h2>
+                <form action="index_process.php" method="POST">
+                    <div>
+                        <label>Skill 1</label>
+                        <input name="skill1" type="text" required>
+                    </div>
+                    <div>
+                        <label>Skill 2</label>
+                        <input name="skill2" type="text" required>
+                    </div>
+                    <div>
+                        <label>Skill 3</label>
+                        <input name="skill3" type="text">
+                    </div>
+                    <div>
+                        <button>Update</button>
+                    </div>
+                </form>
+
+            <?php else: ?>
+
+                <h2>Update You skills</h2>
+                <form method="POST">
+                    <div>
+                        <label>Skill 1</label>
+                        <input name="skill1" type="text" required>
+                    </div>
+                    <div>
+                        <label>Skill 2</label>
+                        <input name="skill2" type="text" required>
+                    </div>
+                    <div>
+                        <label>Skill 3</label>
+                        <input name="skill3" type="text">
+                    </div>
+                    <div>
+                        <button>Update</button>
+                    </div>
+                </form>
+            <?php endif; ?>
+        </div>
+
     <?php else: ?>
-        <p>You can <a href="login.php"> log in</a> or <a href="signup.htm"> Sign Up</a></p> 
+        
+        <p>Content will be available after Login is completed</p>
+        <p>You can <a href="../Login_Signup/login.php"> log in</a> or <a href="../Login_Signup/signup.htm"> Sign Up</a></p>
+
     <?php endif; ?>
 
-    <div class="skill_update">
-        <h2>Enter You skills</h2>
-        <form action="index_process.php" method="POST">
-            <div>
-                <label>Skill 1</label>
-                <input name="skill1" type="text" required>
-            </div>
-            <div>
-                <label>Skill 2</label>
-                <input name="skill2" type="text" required>
-            </div>
-            <div>
-                <label>Skill 3</label>
-                <input name="skill3" type="text">
-            </div>
-            <div>
-                <button>Update</button>
-            </div>
-        </form>
-    </div>
+    <p>You can go to main page using this <a href="../Main_Pages/user_index.php">link</a></p>
 
-    <div class="company_search">
-        <input type="text" name="company_search" value="Enter Company Name" onclick="if(this.value=='Enter Company Name') this.value='';">
-        <button>Search</button>
-
-        <?php
-            $mysqli=require __DIR__."/database.php";
-
-            $sql="SELECT EXISTS(SELECT uname from user_info WHERE uname='company_search'";
-        
-        ?>
-    </div>
-
-    
-    <div class="comp_des">
-        <div id="comp_des_upper">
-            <img src="overlord.png" id='comp_logo'>
-            <h3>Company Name</h3>
-        </div>
-        <div id="comp_des_lower">
-            <h4>Job Description</h4>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque maxime nobis, debitis ex iusto illum repellendus natus iure quibusdam? Laborum excepturi culpa quasi. Dolore eius iusto sint molestias alias aliquam sunt perferendis nihil ab iure cum ipsa perspiciatis</p>
-            <h4>Language Required:</h4><span>lang 1, lang 2</span>
-            <br>
-            <button id=comp_but>Apply Here</button>
-        </div>
-    </div>
-
+    <p><a href="../Login_Signup/logout.php">Logout</a></p>
 
 </body>
+
 </html>

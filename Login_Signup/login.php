@@ -2,7 +2,8 @@
 
 
 if($_SERVER["REQUEST_METHOD"]=== "POST"){
-    $mysqli = require __DIR__ . "database.php";
+
+    $mysqli = require __DIR__ . "/database.php";
 
     $sql=sprintf("SELECT * FROM user_info
                 WHERE uname = '%s'",
@@ -20,7 +21,6 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
 
             session_start();
             session_regenerate_id();
-
 
             $_SESSION["user_id"]=$user["id"];
             if($user["user_type"]=="user"){
@@ -70,6 +70,8 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
         </div>
 
     </form>
+
+    <p><a href="signup.htm">Signup Here</a></p>
 
 </body>
 </html>
