@@ -15,12 +15,12 @@
     flex-direction: column;
   }
   
-
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
+  #greetings{
+    color:white;
+    font-size: 1.3em;
+    margin:1.02em 0;
   }
+
   
 
   p {
@@ -32,6 +32,7 @@
     display: none;
   }
 
+  
 
   .card {
     max-width: 300px;
@@ -88,7 +89,7 @@
   }
 
   .zoom {
-    padding: 0.3em;
+    padding: 0.3em  1em ;
     color: #4f0447;
     display: inline-block;
     position: relative;
@@ -120,7 +121,52 @@
   }
   100% {
     -webkit-transform: scale(1.2);
-    transform: scale(1.2);
+    transform: scale(1.12);
   }
 }
 
+nav{
+  background: hotpink;
+  height:12vh;
+  display:flex;
+  flex-direction: row;
+  padding: 2em
+
+}
+
+ul{
+  display: flex;
+  flex-direction: row;
+  /* padding:0 70vw; */
+}
+
+#logo{
+  padding: 0 50vw 0 0 ;
+}
+
+
+a{
+  text-decoration: none;
+  color:rgb(120, 24, 104);
+  font-weight: bold;
+  font-size: 1.2em;
+}
+  
+.hover-link {
+  text-decoration: none;
+  color:rgb(120, 24, 104);
+  font-weight: bold;
+  font-size: 1.2em;
+  transition: color 0.3s, transform 0.3s; /* Transition duration for color and transform properties */
+}
+
+.hover-link:hover {
+  color: rgb(255, 240, 74); /* Color on hover */
+  transform: scale(1.5); /* Zoom effect on hover */
+}
+
+
+li {
+  list-style: none;
+  padding: 0 25px;
+}

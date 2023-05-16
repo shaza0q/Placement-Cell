@@ -58,9 +58,18 @@ if($result2->num_rows >0){
     <link rel="stylesheet" type="text/css" href="styles1.css" />
 </head>
 <body>
-
-    <a href="../Login_Signup/logout.php">Logout</a>
-    <a href="../User_Skill_Post/index_user.php">Update skills</a>
+    <nav>
+        <div id='logo'>
+            <a href="#">LOGO</a>
+        </div>
+        <div id='links'>
+            <ul>
+                <li><a href="../Login_Signup/logout.php">Logout</a></li>
+                <li><a href="../User_Skill_Post/index_user.php">Update skills</a></li>
+            </ul>
+        </div>
+    </nav>
+    
     <p id=greetings>Hello <?= htmlspecialchars($user["uname"])?></p>
     <h2>Company Recomendations for you</h2>
 
@@ -101,8 +110,8 @@ if($result2->num_rows >0){
                 <p>
                 <b>Description: </b><?php echo $row["jdesc"]?>
                 </p>
+                <a href="company.php?id=<?php echo $row['id'];?>" class="zoom">Click here to apply</a>
                 
-
             </div>
                     
         </div>
