@@ -6,7 +6,7 @@ $GLOBALS['comp_id']=0;
 
 $mysqli = require __DIR__ . "\..\database.php";
 
-echo $_SESSION["user_id"];
+// echo $_SESSION["user_id"];
 // echo '<script type="text/JavaScript">';
 // echo 'alert("Your Skills have been taken into consideration")';
 // echo '</script>';
@@ -43,7 +43,7 @@ if($result2->num_rows >0){
     }
 }
 
-echo implode($array);
+// echo implode($array);
 
 
 ?>
@@ -59,7 +59,9 @@ echo implode($array);
 </head>
 <body>
 
-    <p>Hello <?= htmlspecialchars($user["uname"])?></p>
+    <a href="../Login_Signup/logout.php">Logout</a>
+    <a href="../User_Skill_Post/index_user.php">Update skills</a>
+    <p id=greetings>Hello <?= htmlspecialchars($user["uname"])?></p>
     <h2>Company Recomendations for you</h2>
 
     <div class="container">
@@ -99,9 +101,7 @@ echo implode($array);
                 <p>
                 <b>Description: </b><?php echo $row["jdesc"]?>
                 </p>
-                <p>
-                    <a href='<?=$comp['cdesc']?>' class="zoom">Click here to apply</a>
-                </p>
+                
 
             </div>
                     
@@ -114,6 +114,6 @@ echo implode($array);
         ?>
     </div>
 
-
+    
 </body>
 </html>
