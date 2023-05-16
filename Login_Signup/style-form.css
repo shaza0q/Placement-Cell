@@ -1,0 +1,47 @@
+  .my-form {
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .my-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .my-form input,
+  .my-form textarea,
+  .my-form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .my-form input[type="submit"] {
+    background-color: #4ebfcc;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: large;
+  }
+  
+  .my-form input[type="submit"]:hover {
+    background-color: #0a7279;
+  }
+
+  h1{
+    font-size: 2.5em;
+    justify-content: center;
+    align-items: center;
+    padding: 0.6em;
+  }

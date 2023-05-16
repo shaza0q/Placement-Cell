@@ -67,12 +67,29 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company data Updates</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="../Main_Pages/styles2.css">
+    <link rel="stylesheet" href="../Main_Pages/footer.css">
+    <link rel="stylesheet" href="../Login_Signup/style-form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 </head>
 <body>
 
-    <h1> Tell us about yourself..</h1>
+    <nav>
+        <div id='logo'>
+            <a href="#">LOGO</a>
+        </div>
+        <div id='links'>
+            <ul>
+                <li><a href="../Main_Pages/comp_index.php" class='hover-link'>Home</a></li>
+                <li><a href="../Login_Signup/logout.php" class='hover-link'>Logout</a></li>
+                <li><a href="#" class='hover-link'>Contact us</a></li>
+            </ul>
+            </ul>
+        </div>
+    </nav>
+
+    <h1> We want to know you better</h1>
     
     <?php if(isset($user)): ?>
         <p> Hello <?= htmlspecialchars($user['uname'])?></p> 
@@ -81,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
         <p>You can <a href="login.php"> log in</a> or <a href="signup.htm"> Sign Up</a></p> 
     <?php endif; ?>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" class="my-form">
 
         <label>Logo</label>
         
@@ -97,6 +114,17 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
 
         <input type='submit' name='comp-form-submit'>
     </form>
+
+    <footer class="footer">
+        <div class="container2">
+            <div class="footer-content">
+                <p>&copy; 2023 Placement Cell Company. All rights reserved</p>
+                <a href="../contact.html">Contact</a>
+                <a href="../about.html">About Us</a>
+                <span id="last-l">Made with &#x2665;</span>
+            </div>
+        </div>
+    </footer>
 
 
     

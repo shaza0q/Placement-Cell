@@ -2,8 +2,6 @@
 
 session_start();
 
-$GLOBALS['comp_id']=0;
-
 $mysqli = require __DIR__ . "\..\database.php";
 
 // echo $_SESSION["user_id"];
@@ -23,9 +21,13 @@ if (isset($_SESSION["user_id"])) {
 }
 
 // Selecting the user data
-$sql1= "SELECT * FROM user_data WHERE id={$_SESSION["user_id"]}";
-$result1=$mysqli->query($sql1);
-$user1 = $result1->fetch_assoc();
+if($sql1= "SELECT * FROM user_data WHERE id={$_SESSION["user_id"]}"){
+    $result1=$mysqli->query($sql1);
+    $user1 = $result1->fetch_assoc();
+}
+else{
+    header("Location: ../Login_Signup/login.php");
+}
 
 // Selecting company job post data
 $sql2="SELECT * FROM job_post";
@@ -45,7 +47,6 @@ if($result2->num_rows >0){
 
 // echo implode($array);
 
-
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +57,7 @@ if($result2->num_rows >0){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Index Page</title>
     <link rel="stylesheet" type="text/css" href="styles1.css" />
+    <link rel="stylesheet" href="footer.css">
 </head>
 <body>
     <nav>
@@ -64,13 +66,15 @@ if($result2->num_rows >0){
         </div>
         <div id='links'>
             <ul>
-                <li><a href="../Login_Signup/logout.php">Logout</a></li>
-                <li><a href="../User_Skill_Post/index_user.php">Update skills</a></li>
+                <span>|</span>
+                <li><a href="../Login_Signup/logout.php" class='hover-link'>Logout</a></li><span>|</span>
+                <li><a href="../User_Skill_Post/index_user.php" class='hover-link'>Update skills</a></li>
             </ul>
         </div>
     </nav>
     
-    <p id=greetings>Hello <?= htmlspecialchars($user["uname"])?></p>
+    <p id=greetings>Hello <?= htmlspecialchars($user["uname"])?>&#x1F44B;</p>
+    <p id=greetings-s>Hope you are doing great</p>
     <h2>Company Recomendations for you</h2>
 
     <div class="container">
@@ -123,6 +127,23 @@ if($result2->num_rows >0){
         ?>
     </div>
 
-    
+    <div class="search_bar">
+        <form action="search.php" method="GET">
+            <input type="text" name="query" placeholder="Search..." />
+            <input type="submit" value="Search" />
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="container2">
+            <div class="footer-content">
+                <p>&copy; 2023 Placement Cell Company. All rights reserved</p>
+                <a href="../contact.html">Contact</a>
+                <a href="../about.html">About Us</a>
+                <span id="last-l">Made with &#x2665;</span>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>

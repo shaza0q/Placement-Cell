@@ -60,87 +60,135 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    <link rel="stylesheet" href="style_index.css">
-</head>
+    <link rel="stylesheet" href="../Main_Pages/styles2.css">
+    <link rel="stylesheet" href="../Main_Pages/footer.css">
+    <link rel="stylesheet" href="../Login_Signup/style-form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        #some1,#some2{
+            color: #4f0447;
+            font-size: 2em;
+            padding: 0.5em;
+            text-align: center;
+        }
+        #some1{
+            font-size: 2.5em;
+        }
 
+        #some3{
+            font: 12em;
+        }
+
+        .skill_update{
+            padding: 1.5em;
+            margin: 20px
+        }
+
+    </style>
+
+</head>
 <body>
 
-    <h1>Home</h1>
-
-    <?php if (isset($user)): ?>
-
-        <p> You are logged in </p>
-        <p> Hello
-            <?= htmlspecialchars($user['uname']) ?>
-        </p>
-
-        <div class="skill_update">
-            <?php if (isset($userin)): ?>
-
-                <p>Your skills are as follows <br>
-                    <?= htmlspecialchars($userin["skill1"]) ?>
-                    <br>
-                    <?= htmlspecialchars($userin["skill2"]) ?>
-                    <br>
-                    <?= htmlspecialchars($userin["skill3"]) ?>
-                </p>
-
-            <?php endif; ?>
-
-            <?php if(htmlspecialchars($userin["skill1"]) == ""): ?>
-                <h2>Enter You skills</h2>
-                <form action="index_process.php" method="POST">
-                    <div>
-                        <label>Skill 1</label>
-                        <input name="skill1" type="text" required>
-                    </div>
-                    <div>
-                        <label>Skill 2</label>
-                        <input name="skill2" type="text" required>
-                    </div>
-                    <div>
-                        <label>Skill 3</label>
-                        <input name="skill3" type="text">
-                    </div>
-                    <div>
-                        <button>Update</button>
-                    </div>
-                </form>
-
-            <?php else: ?>
-
-                <h2>Update You skills</h2>
-                <form method="POST">
-                    <div>
-                        <label>Skill 1</label>
-                        <input name="skill1" type="text" required>
-                    </div>
-                    <div>
-                        <label>Skill 2</label>
-                        <input name="skill2" type="text" required>
-                    </div>
-                    <div>
-                        <label>Skill 3</label>
-                        <input name="skill3" type="text">
-                    </div>
-                    <div>
-                        <button>Update</button>
-                    </div>
-                </form>
-            <?php endif; ?>
+    <nav>
+        <div id='logo'>
+            <a href="#">LOGO</a>
         </div>
+        <div id='links'>
+            <ul>
+                <li><a href="../Main_Pages/user_index.php" class='hover-link'>Home</a></li>
+                <li><a href="../Login_Signup/logout.php" class='hover-link'>Logout</a></li>
+                <li><a href="#" class='hover-link'>Contact us</a></li>
+            </ul>
+            </ul>
+        </div>
+    </nav> 
 
-    <?php else: ?>
-        
-        <p>Content will be available after Login is completed</p>
-        <p>You can <a href="../Login_Signup/login.php"> log in</a> or <a href="../Login_Signup/signup.htm"> Sign Up</a></p>
+    <main>
+        <h1 id="some1">Let's know better about you</h1>
 
-    <?php endif; ?>
+        <?php if (isset($user)): ?>
 
-    <p>You can go to main page using this <a href="../Main_Pages/user_index.php">link</a></p>
+            <p id="some3"> You are logged in <span class="fas fa-thumbs-up"></span></p>
+            <p id="some3"> Hello
+                <?= htmlspecialchars($user['uname']) ?>
+            </p>
 
-    <p><a href="../Login_Signup/logout.php">Logout</a></p>
+            <div class="skill_update">
+                <?php if (isset($userin)): ?>
+
+                    <p style="font-size: 20px ;">Your skills are as follows <br></p>
+                        <?= htmlspecialchars($userin["skill1"]) ?>
+                        <br>
+                        <?= htmlspecialchars($userin["skill2"]) ?>
+                        <br>
+                        <?= htmlspecialchars($userin["skill3"]) ?>
+
+                <?php endif; ?>
+
+                <?php if(htmlspecialchars($userin["skill1"]) == ""): ?>
+                    <h2 id="some2">Enter You skills</h2>
+                    <form action="index_process.php" method="POST" class='my-form'>
+                        <div>
+                            <label>Skill 1</label>
+                            <input name="skill1" type="text" required>
+                        </div>
+                        <div>
+                            <label>Skill 2</label>
+                            <input name="skill2" type="text" required>
+                        </div>
+                        <div>
+                            <label>Skill 3</label>
+                            <input name="skill3" type="text">
+                        </div>
+                        <div>
+                            <input type="submit" value='Enter'>
+                        </div>
+                    </form>
+
+                <?php else: ?>
+
+                    <h2 id="some2" >Update You skills</h2>
+                    <form method="POST" class='my-form'>
+                        <div>
+                            <label>Skill 1</label>
+                            <input name="skill1" type="text" required>
+                        </div>
+                        <div>
+                            <label>Skill 2</label>
+                            <input name="skill2" type="text" required>
+                        </div>
+                        <div>
+                            <label>Skill 3</label>
+                            <input name="skill3" type="text">
+                        </div>
+                        <div>
+                        <input type="submit" value='Update'>
+                        </div>
+                    </form>
+                <?php endif; ?>
+            </div>
+
+        <?php else: ?>
+            
+            <p>Content will be available after Login is completed</p>
+            <p>You can <a href="../Login_Signup/login.php"> log in</a> or <a href="../Login_Signup/signup.htm"> Sign Up</a></p>
+
+        <?php endif; ?>
+
+        <p>You can go to main page using this <a href="../Main_Pages/user_index.php">link</a></p>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container2">
+            <div class="footer-content">
+                <p>&copy; 2023 Placement Cell Company. All rights reserved</p>
+                <a href="../contact.html">Contact</a>
+                <a href="../about.html">About Us</a>
+                <span id="last-l">Made with &#x2665;</span>
+            </div>
+        </div>
+    </footer>
 
 </body>
 
