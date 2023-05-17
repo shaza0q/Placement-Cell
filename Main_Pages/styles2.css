@@ -108,16 +108,12 @@ b{
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin: 20px;
 }
 
 .logo img {
   max-width: 100px;
   max-height: 100px;
-}
-
-.content {
-  text-align: center;
 }
 
 .button {

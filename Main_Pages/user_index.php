@@ -127,12 +127,12 @@ if($result2->num_rows >0){
         ?>
     </div>
 
-    <div class="search_bar">
+    <!-- <div class="search_bar">
         <form action="search.php" method="GET">
             <input type="text" name="query" placeholder="Search..." />
             <input type="submit" value="Search" />
         </form>
-    </div>
+    </div> -->
 
     <footer class="footer">
         <div class="container2">

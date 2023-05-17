@@ -22,6 +22,13 @@ if(isset($_SESSION["user_id"])){
 
 // echo $comp_dt["comp_logo"];
 
+$sql1="SELECT * from comp_data
+Where id={$_SESSION['user_id']}";
+
+$result1=$mysqli->query($sql1);
+$comp=$result1->fetch_assoc();
+
+
 if ($_SERVER["REQUEST_METHOD"]==="POST"){
 
     $img_name=$_FILES['comp_logo']['name'];
@@ -30,30 +37,50 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
     move_uploaded_file($tmp_img_name,$folder.$img_name);
     
     // header("Location: ../Company_Job_Post/index_jpost.php");
+    if($comp['comp_logo']==""){
+        $sql= "UPDATE comp_data set cwork=?, cdesc=?, comp_logo=? WHERE id={$_SESSION["user_id"]}";
+        $stmt=$mysqli->stmt_init();
 
-    $sql = "INSERT INTO comp_data (id, cname, cwork, cdesc, comp_logo) VALUES (?,?,?,?,?)";
+        if(! $stmt->prepare($sql)){
+            echo("SQL error: " . $mysqli->error);
+        }
 
-    $stmt=$mysqli->stmt_init();
+        $stmt->bind_param("sss",
+        $_POST["comp_work"],
+        $_POST["comp_desc"],
+        $img_name);
 
-    if(! $stmt->prepare($sql)){
-        echo("SQL error: " . $mysqli->error);
-    }
+        if($stmt->execute()){
+            header("Location: ../Company_Job_Post/index_jpost.php");
+        }else{
+            die($mysqli->error." ". $mysqli->errno);
+        }
 
-    $stmt->bind_param("issss",
-    $user["id"],
-    $user["uname"],
-    $_POST["comp_work"],
-    $_POST["comp_desc"],
-    $img_name);
-
-    if($stmt->execute()){
-        header("Location: ../Company_Job_Post/index_jpost.php");
     }else{
-        die($mysqli->error." ". $mysqli->errno);
+        $sql = "INSERT INTO comp_data (id, cname, cwork, cdesc, comp_logo) VALUES (?,?,?,?,?)";
+
+        $stmt=$mysqli->stmt_init();
+
+        if(! $stmt->prepare($sql)){
+            echo("SQL error: " . $mysqli->error);
+        }
+
+        $stmt->bind_param("issss",
+        $user["id"],
+        $user["uname"],
+        $_POST["comp_work"],
+        $_POST["comp_desc"],
+        $img_name);
+
+        if($stmt->execute()){
+            header("Location: ../Company_Job_Post/index_jpost.php");
+        }else{
+            die($mysqli->error." ". $mysqli->errno);
+        }
     }
 
 }else{
-    echo("Not Uploaded");
+    // echo("Not Uploaded");
 }
 
 ?>

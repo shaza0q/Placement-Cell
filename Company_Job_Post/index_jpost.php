@@ -78,7 +78,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 
     <nav>
         <div id='logo'>
-            <img src='../Website photos/pcell-logo.png'>
+            <p>LOGO<p>
         </div>
         <div id='links'>
             <ul>

@@ -30,6 +30,21 @@ $user1 = $result1->fetch_assoc();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Index</title>
+    <style>
+        .logo{
+            margin:20px;
+        }
+
+        #logo_card{
+            border-radius: 50%;
+        }
+
+        .content{
+            display: flex;
+            flex-direction: column;
+        }
+
+    </style>
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="styles2.css">
 </head>
