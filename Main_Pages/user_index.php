@@ -2,6 +2,10 @@
 
 session_start();
 
+$_GLOBALS['srch_data']="bad ssad";
+$_GLOBALS['forn']="";
+
+
 $mysqli = require __DIR__ . "\..\database.php";
 
 // echo $_SESSION["user_id"];
@@ -31,6 +35,7 @@ else{
 
 // Selecting company job post data
 $sql2="SELECT * FROM job_post";
+
 $result2=$mysqli->query($sql2);
 
 $array=[];
@@ -45,6 +50,32 @@ if($result2->num_rows >0){
     }
 }
 
+if($_SERVER["REQUEST_METHOD"]=== "POST"){
+
+    $search_cmp= $mysqli->real_escape_string($_POST['search_br']);
+
+    $query = "SELECT * FROM comp_data
+    WHERE cname LIKE '%{$_POST['search_br']}%'";
+
+    $resultn=$mysqli->query($query);
+
+    if($srch_info=$resultn->fetch_assoc()){
+        // echo $srch_info['id'];
+        $_GLOBALS['srch_data']=$srch_info['id'];
+        $_GLOBALS['forn'] = "Data Found!!";
+    }
+    else{
+        // $_GLOBALS['srch_data'] = "Data not found";
+        $_GLOBALS['forn'] = "Data Not Found!!";
+    }
+    
+
+    
+}
+
+
+
+
 // echo implode($array);
 
 ?>
@@ -58,6 +89,53 @@ if($result2->num_rows >0){
     <title>User Index Page</title>
     <link rel="stylesheet" type="text/css" href="styles1.css" />
     <link rel="stylesheet" href="footer.css">
+    <style>
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid black;
+            margin-left: 1em;
+            margin-right: 1em;
+            padding: 1em;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            
+        }
+
+        button[type="submit"] {
+            padding: 8px 12px;
+            background-color: rgba(24,120,241,0.5);
+            color: white;
+            border: none;
+            cursor:pointer;
+        }
+
+        .search_bar{
+            max-width: 300px;
+            height: 50px;
+            padding: 0.2em;
+        }
+
+        button[type="submit"]:hover{
+            background-color: rgba(24,14,241,0.5);
+            max-width: 75px;
+        }
+
+        .sect{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .frm{
+            display: flex;
+            flex-direction: row;
+           
+        }
+
+    </style>
 </head>
 <body>
     <nav>
@@ -75,58 +153,113 @@ if($result2->num_rows >0){
     
     <p id=greetings>Hello <?= htmlspecialchars($user["uname"])?>&#x1F44B;</p>
     <p id=greetings-s>Hope you are doing great</p>
-    <h2>Company Recomendations for you</h2>
+    
+    
+    <div class="sect">
+        <div class="container">
+            <h2>Company Recomendations for you</h2>
+            <?php
+                if($result2->num_rows >0){
+                    $result2->data_seek(0);
+                    while($row=$result2->fetch_assoc()){
 
-    <div class="container">
-        <?php
-            if($result2->num_rows >0){
-                $result2->data_seek(0);
-                while($row=$result2->fetch_assoc()){
+                        if($row['jskills']==$user1['skill1'] || $row['jskills']==$user1['skill2'] || $row['jskills']==$user1['skill3']){   
 
-                    if($row['jskills']==$user1['skill1'] || $row['jskills']==$user1['skill2'] || $row['jskills']==$user1['skill3']){   
-              
+            ?>
+            <div class='card'>
+                <div id="lola_align">
+                    <?php 
+                        $sql3="SELECT * FROM comp_data
+                        WHERE id={$row['id']}";
+                        $result3=$mysqli->query($sql3);
+                        $comp=$result3->fetch_assoc();
+
+                    ?>
+
+                    <img src="../Comp_Logo_Uploads/<?= htmlspecialchars($comp['comp_logo'])?>" width=100px id="logo_card">
+
+                    <p class="comp_name"><?php echo $row["name"]?></p>
+
+                </div>
+                <div class="desc_job">
+                    <p>
+                    <b>Post: </b><?php echo $row["jpost"] ?>
+                    </p>
+                    <p>
+                    <b>Vacancies: </b><?php echo $row["nvacan"]?>
+                    </p>
+                    <p><b>Prerequiste: </b><?php echo $row["jskills"]?>
+                    </p>
+                    <p>
+                    <b>Description: </b><?php echo $row["jdesc"]?>
+                    </p>
+                    <a href="company.php?id=<?php echo $row['id'];?>" class="zoom">Click here to apply</a>
                     
-        ?>
-        <div class='card'>
-            <div id="lola_align">
-                <?php 
-                    $sql3="SELECT * FROM comp_data
-                    WHERE id={$row['id']}";
-                    $result3=$mysqli->query($sql3);
-                    $comp=$result3->fetch_assoc();
-
-                ?>
-
-                <img src="../Comp_Logo_Uploads/<?= htmlspecialchars($comp['comp_logo'])?>" width=100px id="logo_card">
-
-                <p class="comp_name"><?php echo $row["name"]?></p>
-
+                </div>
+                <?php mysqli_free_result($result3); ?> 
             </div>
-            <div class="desc_job">
-                <p>
-                <b>Post: </b><?php echo $row["jpost"] ?>
-                </p>
-                <p>
-                <b>Vacancies: </b><?php echo $row["nvacan"]?>
-                </p>
-                <p><b>Prerequiste: </b><?php echo $row["jskills"]?>
-                </p>
-                <p>
-                <b>Description: </b><?php echo $row["jdesc"]?>
-                </p>
-                <a href="company.php?id=<?php echo $row['id'];?>" class="zoom">Click here to apply</a>
+            <?php
+                                
+                        }
+                    }
+
+                    mysqli_free_result($result2);
+                }
+            ?>
+        </div>
+        
+        <div class="search-container">
+            <h2>Search for your dream company</h2>
+            <form method="POST" class='frm'>
+                <input type="text" placeholder="Search" id='search_bar' name='search_br' value="">
+                <button type="submit">Search</button>
+            </form>
+            <!-- <p>Results Will Appear soon...</p> -->
+            <p><? echo $_GLOBALS['forn'] ?></p>
+            <div class='card'>
+                <div id="lola_align">
+                    <?php 
+                        $sql3="SELECT * FROM comp_data
+                        WHERE id={$_GLOBALS['srch_data']}";
+                        $result3=$mysqli->query($sql3);
+                        $comp=$result3->fetch_assoc();
+
+                        $sql4="SELECT * FROM job_post
+                        WHERE id={$_GLOBALS['srch_data']}";
+                        $result4=$mysqli->query($sql4);
+                        $row=$result4->fetch_assoc();
+
+                    ?>
+
+                    <img src="../Comp_Logo_Uploads/<?= htmlspecialchars($comp['comp_logo'])?>" width=100px id="logo_card">
+
+                    <p class="comp_name"><?php echo $comp["cname"]?></p>
+
+                </div>
+                <div class="desc_job">
+                    <p>
+                    <b>Post: </b><?php echo $row["jpost"] ?>
+                    </p>
+                    <p>
+                    <b>Vacancies: </b><?php echo $row["nvacan"]?>
+                    </p>
+                    <p><b>Prerequiste: </b><?php echo $row["jskills"]?>
+                    </p>
+                    <p>
+                    <b>Description: </b><?php echo $row["jdesc"]?>
+                    </p>
+                    <a href="company.php?id=<?php echo $row['id'];?>" class="zoom">Click here to apply</a>
+                    
+                </div>
+                <?php mysqli_free_result($result3);
+                    mysqli_free_result($result4);
+                ?>  
                 
             </div>
-                    
-        </div>
-        <?php
-                              
-                    }
-                }
-            }
-        ?>
-    </div>
 
+        </div>
+
+    </div>
     <!-- <div class="search_bar">
         <form action="search.php" method="GET">
             <input type="text" name="query" placeholder="Search..." />

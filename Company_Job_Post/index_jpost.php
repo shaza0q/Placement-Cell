@@ -25,11 +25,11 @@ if(isset($_SESSION["user_id"])){
 
 if($_SERVER["REQUEST_METHOD"]==="POST"){
 
-    $sql="INSERT INTO job_post (id, name, jpost, nvacan, jskills, jdesc, jtime) VALUES (?,?,?,?,?,?,?)";
+    $sqli="INSERT INTO job_post (id, name, jpost, nvacan, jskills, jdesc, jtime) VALUES (?,?,?,?,?,?,?)";
 
     $stmt=$mysqli->stmt_init();
 
-    if(! $stmt->prepare($sql)){
+    if(! $stmt->prepare($sqli)){
         echo("SQL error: " . $mysqli->error);
     }
 
@@ -63,7 +63,9 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
         #heading{
             display: flex;
             flex-direction: row;
-            padding:20px
+            padding:20px;
+            justify-content:center;
+            margin:20px
         }
 
         #logo1{
@@ -93,14 +95,14 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
     <div id="heading">
         <?php if(isset($user)): ?>
             <img id="logo1" src="../Comp_Logo_Uploads/<?php echo $user['comp_logo']?>">
-            <h2><?= htmlspecialchars($user["cname"])?></h2>
+            <h2><?php echo $user["cname"]?></h2>
         <?php else: ?>
             <p>Image error..</p> 
         <?php endif; ?>
         
     </div>
 
-    <?php if(htmlspecialchars($user1["name"])!=""): ?>
+    <?php if($user1["name"] !== null && isset($user1['id']) ): ?>
         <p>You have already posted a job offer, wait for <?= htmlspecialchars(($user1["jtime"])) ?> days before posting new job...</p>
         <p>Thank you for your patience</p>
 

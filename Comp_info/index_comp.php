@@ -2,7 +2,7 @@
 
 session_start();
 
-$mysqli=require __DIR__."/database.php";
+$mysqli=require __DIR__."\..\database.php";
 
 if(isset($_SESSION["user_id"])){
 
@@ -12,24 +12,24 @@ if(isset($_SESSION["user_id"])){
     $result= $mysqli->query($sql);
     $user=$result->fetch_assoc();
 
-    // $sql1="SELECT * comp_data 
-    // WHERE id={$_SESSION["user_id"]}";
 
-    // $resut1= $mysqli->query($sql1);
-    // $comp_dt=$result1->fetch_assoc();
+    $sql1="SELECT * from comp_data
+    WHERE id={$_SESSION["user_id"]}";
+
+    $result1=$mysqli->query($sql1);
+    if ($result1 && $result1->num_rows > 0) {
+        $comp = $result1->fetch_assoc();
+        echo $comp['id'];
+    } else {
+        echo "No data found.";
+    }
 
 }
 
 // echo $comp_dt["comp_logo"];
 
-$sql1="SELECT * from comp_data
-Where id={$_SESSION['user_id']}";
 
-$result1=$mysqli->query($sql1);
-$comp=$result1->fetch_assoc();
-
-
-if ($_SERVER["REQUEST_METHOD"]==="POST"){
+if ($_SERVER["REQUEST_METHOD"] === "POST"){
 
     $img_name=$_FILES['comp_logo']['name'];
     $tmp_img_name=$_FILES['comp_logo']['tmp_name'];
@@ -37,31 +37,31 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
     move_uploaded_file($tmp_img_name,$folder.$img_name);
     
     // header("Location: ../Company_Job_Post/index_jpost.php");
-    if($comp['comp_logo']==""){
-        $sql= "UPDATE comp_data set cwork=?, cdesc=?, comp_logo=? WHERE id={$_SESSION["user_id"]}";
+    // if($comp['comp_logo']==""){
+    //     $sqli= "UPDATE comp_data set cwork=?, cdesc=?, comp_logo=? WHERE id={$_SESSION["user_id"]}";
+    //     $stmt=$mysqli->stmt_init();
+
+    //     if(! $stmt->prepare($sqli)){
+    //         echo("SQL error: " . $mysqli->error);
+    //     }
+
+    //     $stmt->bind_param("sss",
+    //     $_POST["comp_work"],
+    //     $_POST["comp_desc"],
+    //     $img_name);
+
+    //     if($stmt->execute()){
+    //         header("Location: ../Company_Job_Post/index_jpost.php");
+    //     }else{
+    //         die($mysqli->error." ". $mysqli->errno);
+    //     }
+
+    // }else{
+        $sqli = "INSERT INTO comp_data (id, cname, cwork, cdesc, comp_logo) VALUES (?,?,?,?,?)";
+
         $stmt=$mysqli->stmt_init();
 
-        if(! $stmt->prepare($sql)){
-            echo("SQL error: " . $mysqli->error);
-        }
-
-        $stmt->bind_param("sss",
-        $_POST["comp_work"],
-        $_POST["comp_desc"],
-        $img_name);
-
-        if($stmt->execute()){
-            header("Location: ../Company_Job_Post/index_jpost.php");
-        }else{
-            die($mysqli->error." ". $mysqli->errno);
-        }
-
-    }else{
-        $sql = "INSERT INTO comp_data (id, cname, cwork, cdesc, comp_logo) VALUES (?,?,?,?,?)";
-
-        $stmt=$mysqli->stmt_init();
-
-        if(! $stmt->prepare($sql)){
+        if(! $stmt->prepare($sqli)){
             echo("SQL error: " . $mysqli->error);
         }
 
@@ -79,9 +79,7 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
         }
     }
 
-}else{
-    // echo("Not Uploaded");
-}
+
 
 ?>
 
@@ -98,7 +96,25 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
     <link rel="stylesheet" href="../Main_Pages/footer.css">
     <link rel="stylesheet" href="../Login_Signup/style-form.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .conte{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin:20px
+        }
 
+        #logocard{
+            width: 75px;
+        }
+
+        #grt{
+            font-size: 1.5em;
+            font-weight:normal;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -108,7 +124,8 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
         </div>
         <div id='links'>
             <ul>
-                <li><a href="../Main_Pages/comp_index.php" class='hover-link'>Home</a></li>
+                <li><a href="../Main_Pages/comp_index1.php" class='hover-link'>Home</a></li>
+                <li><a href="../Company_Job_Post/index_jpost.php" class='hover-link'>Post job</a></li>
                 <li><a href="../Login_Signup/logout.php" class='hover-link'>Logout</a></li>
                 <li><a href="#" class='hover-link'>Contact us</a></li>
             </ul>
@@ -119,28 +136,55 @@ if ($_SERVER["REQUEST_METHOD"]==="POST"){
     <h1> We want to know you better</h1>
     
     <?php if(isset($user)): ?>
-        <p> Hello <?= htmlspecialchars($user['uname'])?></p> 
-        <p><a href="logout.php">Log out</a></p>
+        <div class="conte">
+            <!--  -->
+            <img src="../Comp_Logo_Uploads/<?= htmlspecialchars($comp['comp_logo'])?>" width=100px id="logocard" alt="will be updated soon">
+            <p id='grt'> Hello <?= htmlspecialchars($user['uname'])?></p> 
+        </div>
     <?php else: ?>
         <p>You can <a href="login.php"> log in</a> or <a href="signup.htm"> Sign Up</a></p> 
     <?php endif; ?>
 
-    <form method="POST" enctype="multipart/form-data" class="my-form">
+    <!--  -->
 
-        <label>Logo</label>
-        
-        <input type="file" name="comp_logo">
+            <h3 id='idh3'>Enter Your Details</h3>
+            <form method="POST" enctype="multipart/form-data" class="my-form">
+                    
+                <label>Logo</label>
+                
+                <input type="file" name="comp_logo">
 
-        <label>Main field of work:</label>
-        <input type="text" name="comp_work">
+                <label>Main field of work:</label>
+                <input type="text" name="comp_work">
 
-        <label>Description about your Company:</label>
-        <textarea rows="3" 
-        cols="50" name="comp_desc" 
-        onclick="if(this.value=='Enter description here...') this.value='';">Enter description here...</textarea>
+                <label>Description about your Company:</label>
+                <textarea rows="3" 
+                cols="50" name="comp_desc" 
+                onclick="if(this.value=='Enter description here...') this.value='';">Enter description here...</textarea>
 
-        <input type='submit' name='comp-form-submit'>
-    </form>
+                <input type='submit' name='comp-form-submit'>
+            </form>
+
+    <!-- <php else: ?>
+
+        <h3 id='idh3'>Update Your Details</h3>
+        <form method="POST" enctype="multipart/form-data" class="my-form" >
+                    
+            <label>Logo</label>
+            
+            <input type="file" name="comp_logo">
+
+            <label>Main field of work:</label>
+            <input type="text" name="comp_work">
+
+            <label>Description about your Company:</label>
+            <textarea rows="3" 
+            cols="50" name="comp_desc" 
+            onclick="if(this.value=='Enter description here...') this.value='';">Enter description here...</textarea>
+
+            <input type='submit' name='comp-form-submit'>
+        </form> -->
+
 
     <footer class="footer">
         <div class="container2">

@@ -145,6 +145,7 @@ nav{
   display:flex;
   flex-direction: row;
   padding: 1.25em;
+  justify-content: space-between;
 }
 
 ul{
