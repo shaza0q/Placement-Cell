@@ -126,18 +126,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <?php endif; ?>
 
                 <?php if(htmlspecialchars($userin["skill1"]) == ""): ?>
-                    <h2 id="some2">Enter You skills</h2>
+                    <h2 id="some2">Enter your medical conditions or allergies</h2>
                     <form action="index_process.php" method="POST" class='my-form'>
                         <div>
-                            <label>Skill 1</label>
+                            <label>medical condition/allergies 1</label>
                             <input name="skill1" type="text" required>
                         </div>
                         <div>
-                            <label>Skill 2</label>
+                            <label>medical condition/allergies 2</label>
                             <input name="skill2" type="text" required>
                         </div>
                         <div>
-                            <label>Skill 3</label>
+                            <label>medical condition/allergies 3</label>
                             <input name="skill3" type="text">
                         </div>
                         <div>

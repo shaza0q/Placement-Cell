@@ -1,13 +1,5 @@
 <?php
 
-// if(strlen($_POST['password'])<8){
-//     die("Password must be atleast 8 characters long");
-// }
-
-// if($_POST["password"]!=$_POST["con_pass"]){
-//     die("Passwords does not match");
-// }
-
 $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 

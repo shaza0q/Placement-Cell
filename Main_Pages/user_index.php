@@ -93,7 +93,7 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
         .search-container {
             display: flex;
             flex-direction: column;
-            border: 1px solid black;
+            /* border: 1px solid black; */
             margin-left: 1em;
             margin-right: 1em;
             padding: 1em;
@@ -135,6 +135,12 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
            
         }
 
+        nav{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
     </style>
 </head>
 <body>
@@ -146,7 +152,7 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
             <ul>
                 <span>|</span>
                 <li><a href="../Login_Signup/logout.php" class='hover-link'>Logout</a></li><span>|</span>
-                <li><a href="../User_Skill_Post/index_user.php" class='hover-link'>Update skills</a></li>
+                <li><a href="../User_Skill_Post/index_user.php" class='hover-link'>Update</a></li>
             </ul>
         </div>
     </nav>
@@ -157,7 +163,7 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
     
     <div class="sect">
         <div class="container">
-            <h2>Company Recomendations for you</h2>
+            <h2>Doctor's Recomendations for you</h2>
             <?php
                 if($result2->num_rows >0){
                     $result2->data_seek(0);
@@ -183,12 +189,12 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
                 </div>
                 <div class="desc_job">
                     <p>
-                    <b>Post: </b><?php echo $row["jpost"] ?>
+                    <b>Fees: </b><?php echo $row["jpost"] ?>
                     </p>
                     <p>
                     <b>Vacancies: </b><?php echo $row["nvacan"]?>
                     </p>
-                    <p><b>Prerequiste: </b><?php echo $row["jskills"]?>
+                    <p><b>Specialist: </b><?php echo $row["jskills"]?>
                     </p>
                     <p>
                     <b>Description: </b><?php echo $row["jdesc"]?>
@@ -209,7 +215,7 @@ if($_SERVER["REQUEST_METHOD"]=== "POST"){
         </div>
         
         <div class="search-container">
-            <h2>Search for your dream company</h2>
+            <h2>Search for your preferred doctor</h2>
             <form method="POST" class='frm'>
                 <input type="text" placeholder="Search" id='search_bar' name='search_br' value="">
                 <button type="submit">Search</button>

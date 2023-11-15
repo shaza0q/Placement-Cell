@@ -111,13 +111,13 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
         <form method="POST" class="my-form">
             <h1>Enter the job details</h1>
 
-            <label>Enter job Post:</label>
+            <label>Enter fees</label>
             <input type="text" name="jpost">
 
-            <label>Enter vacancies</label>
+            <label>Enter capacity</label>
             <input type="number" name="nvacan">
 
-            <label>Enter skills required:</label>
+            <label>Enter health conditions that you treat:</label>
             <input type="text" name="jskills">
 
             <label>Enter job description:</label>
